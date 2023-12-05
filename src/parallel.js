@@ -8,7 +8,7 @@ let this_region_color = "#FF5733";
 
 function getData(data) {
 
-  const filteredData = data.filter(d => d.region === region_name && d.Sanitation !== "" && d.education_expenditure !== "" && d.health_expenditure !== "");
+  const filteredData = data.filter(d => d.region === region_name && d.Sanitation !== "" && d.prevelance_of_undernourishment !== "" && d.health_expenditure !== "");
 
 
   const aggregatedData = filteredData.map(d => ({
@@ -16,7 +16,7 @@ function getData(data) {
     life_expectancy: parseFloat(d.life_expectancy).toFixed(2),
     health_expenditure: parseFloat(d.health_expenditure).toFixed(2),
     Sanitation: parseFloat(d.Sanitation).toFixed(2),
-    education_expenditure: parseFloat(d.education_expenditure).toFixed(2)
+    undernourishment_rate: parseFloat(d.prevelance_of_undernourishment).toFixed(2)
   }));
 
   return aggregatedData;
@@ -92,12 +92,27 @@ function initChart() {
 
   // For each dimension, I build a linear scale. I store all in a y object
   const y = {}
-  for (let i in dimensions) {
-    let name = dimensions[i]
-    y[name] = d3.scaleLinear()
-      .domain(d3.extent(ParallelData, function (d) { return +d[name]; }))
-      .range([340, 0])
-  }
+  // for (let i in dimensions) {
+  //   let name = dimensions[i]
+  //   y[name] = d3.scaleLinear()
+  //     .domain(d3.extent(ParallelData, function (d) { return +d[name]; }))
+  //     .range([340, 0])
+  // }
+  y.life_expectancy = d3.scaleLinear()
+    .domain([50, 85]) 
+    .range([340, 0]);
+
+  y.health_expenditure = d3.scaleLinear()
+    .domain([0, 18]) 
+    .range([340, 0]);
+
+  y.Sanitation = d3.scaleLinear()
+    .domain([0, 100])
+    .range([340, 0]);
+
+  y.undernourishment_rate = d3.scaleLinear()
+    .domain([0, 50]) 
+    .range([340, 0]);
 
   // Build the X scale -> it find the best position for each Y axis
   const x = d3.scalePoint()
@@ -131,7 +146,7 @@ function initChart() {
     .attr("d", path)
     .style("fill", "none")
     .style("stroke", this_region_color)
-    .style("stroke-width", 4)
+    .style("stroke-width", 5)
     .style("opacity", 0.5)
 
     .on("mouseover", (event, d) => {
@@ -141,7 +156,7 @@ function initChart() {
       Life Expectancy: ${d.life_expectancy}<br>
       Health Expenditure: ${d.health_expenditure}%<br>
       Sanitation: ${d.Sanitation}%<br>
-      Education Expenditure: ${d.education_expenditure}%
+      Prevelance of Undernourishment: ${d.undernourishment_rate}%
     `);
       ;
     })
@@ -171,9 +186,6 @@ function initChart() {
     .attr("y", -3)
     .text(function (d) { return d; })
     .style("fill", "black")
-
-
-
 
 }
 

@@ -49,7 +49,7 @@ const onResize = (targets) => {
 const chartObserver = new ResizeObserver(debounce(onResize, 100));
 //   <h6>Distribution of Jobs across companies and experience levels</h6>
 export const ScatterPlot = () =>
-  `<div class='chart-container-3 d-flex flex-column' id='scatter-container'>
+  `<div class='chart-container-2 d-flex flex-column' id='scatter-container'>
     
       <svg id='scatter-svg' width='100%' height='100%'>
       </svg>
@@ -147,8 +147,10 @@ function initChart() {
   const mousemove = function (event, d) {
     Tooltip
       .html(d.year+"：" + d.avgLifeExpectancy.toFixed(2))
-      .style("left", `${event.offsetX + 700}px`)
-      .style("top", `${event.offsetY + 350}px`)
+      // .style("left", `${event.offsetX + 700}px`)
+      // .style("top", `${event.offsetY + 350}px`)
+      .style("top", (event.pageY - 10) + "px")
+      .style("left", (event.pageX + 10) + "px");
       // .style("left", event.x + "px") // It is important to put the +90: other wise the tooltip is exactly where the point is an it creates a weird effect
       // .style("top", event.y / 2 + "px");
       

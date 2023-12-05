@@ -14,7 +14,7 @@ npm run dev
 
 ## Visualization instruction
 
-Please click on certain region on the map to see the corresponding parallel coordinate and scatterplot on the right side.
+Please click on certain region on the map to see the corresponding scatterplot and parallel coordinate on the right side.
 The map can be panned and zoomed.
 You can hover your mouse on all of three charts to see specific information in tooltip. 
 

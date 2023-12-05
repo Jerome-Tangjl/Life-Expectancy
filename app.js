@@ -1,5 +1,5 @@
 // import { mountBarChart, BarChart } from './src/example';
-import { mountConnectMap, ConnectMap } from './src/connectMap';
+import { mountConnectMap, ConnectMap } from './src/map';
 import { mountScatterPlot, ScatterPlot } from "./src/scatterplot";
 import { mountParallel, Parallel } from "./src/parallel";
 import './style.css';
@@ -13,8 +13,9 @@ document.querySelector('#app').innerHTML = `
   ${ConnectMap()}
   </div>
   <div id='right-container' class='d-flex flex-column flex-nowrap'>
-  ${Parallel()}
   ${ScatterPlot()}
+  ${Parallel()}
+ 
   </div>
   </div>
 `
