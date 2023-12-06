@@ -3,14 +3,33 @@ import { isEmpty, debounce } from "lodash";
 
 const margin = { left: 40, right: 20, top: 50, bottom: 60 };
 let size = { width: 0, height: 0 };
-let region_name = "Sub-Saharan Africa";
-let this_region_color = "#FF5733";
+// let region_name = "Sub-Saharan Africa";
+// let this_region_color = "#FF5733";
+let region_name1 = "Sub-Saharan Africa";
+let this_region_color1 = "#FF5733";
+let region_name2 = "North America";
+let this_region_color2 = "#6EC644";
 
-function getData(data) {
+// function getData(data) {
 
-  const filteredData = data.filter(d => d.region === region_name && d.Sanitation !== "" && d.prevelance_of_undernourishment !== "" && d.health_expenditure !== "");
+//   const filteredData = data.filter(d => d.region === region_name1 && d.Sanitation !== "" && d.prevelance_of_undernourishment !== "" && d.health_expenditure !== "");
 
 
+//   const aggregatedData = filteredData.map(d => ({
+//     country_name: d.country_name,
+//     life_expectancy: parseFloat(d.life_expectancy).toFixed(2),
+//     health_expenditure: parseFloat(d.health_expenditure).toFixed(2),
+//     Sanitation: parseFloat(d.Sanitation).toFixed(2),
+//     undernourishment_rate: parseFloat(d.prevelance_of_undernourishment).toFixed(2)
+//   }));
+
+//   return aggregatedData;
+
+// }
+
+function getDataByRegion(data, regionName) {
+ 
+  const filteredData = data.filter(d => d.region === regionName && d.Sanitation !== "" && d.prevelance_of_undernourishment !== "" && d.health_expenditure !== "");
   const aggregatedData = filteredData.map(d => ({
     country_name: d.country_name,
     life_expectancy: parseFloat(d.life_expectancy).toFixed(2),
@@ -25,6 +44,10 @@ function getData(data) {
 
 let ParallelData;
 let rawData;
+
+let ParallelData1;
+let ParallelData2;
+
 await d3
   .csv(
     "../data/life_expectancy_2019.csv"
@@ -63,8 +86,11 @@ export function mountParallel() {
 
 function initChart() {
 
-  ParallelData = getData(rawData);
-  console.log("parallel", ParallelData);
+  // ParallelData = getData(rawData);
+  // console.log("parallel", ParallelData);
+
+  ParallelData1 = getDataByRegion(rawData, region_name1);
+  ParallelData2 = getDataByRegion(rawData, region_name2);
 
 
   // append the svg object to the body of the page
@@ -83,11 +109,11 @@ function initChart() {
     .attr("text-anchor", "middle")
     .style("font-size", "18px")
     .style("font-weight", "bold")
-    .text(`Life expectancy correlation in ${region_name}`);
+    .text(`Life expectancy correlation`);
 
 
   // Extract the list of dimensions we want to keep in the plot. Here I keep all except the column called Species
-  const dimensions = Object.keys(ParallelData[0]).filter(key => key !== "country_name");
+  const dimensions = Object.keys(ParallelData1[0]).filter(key => key !== "country_name");
   console.log("dimensions", dimensions);
 
   // For each dimension, I build a linear scale. I store all in a y object
@@ -107,7 +133,7 @@ function initChart() {
     .range([340, 0]);
 
   y.Sanitation = d3.scaleLinear()
-    .domain([0, 100])
+    .domain([0, 100]) 
     .range([340, 0]);
 
   y.undernourishment_rate = d3.scaleLinear()
@@ -140,13 +166,13 @@ function initChart() {
 
   // Draw the lines
   svg
-    .selectAll("myPath")
-    .data(ParallelData)
+    .selectAll("myPath1")
+    .data(ParallelData1)
     .join("path")
     .attr("d", path)
     .style("fill", "none")
-    .style("stroke", this_region_color)
-    .style("stroke-width", 5)
+    .style("stroke", this_region_color1)
+    .style("stroke-width", 4)
     .style("opacity", 0.5)
 
     .on("mouseover", (event, d) => {
@@ -156,7 +182,7 @@ function initChart() {
       Life Expectancy: ${d.life_expectancy}<br>
       Health Expenditure: ${d.health_expenditure}%<br>
       Sanitation: ${d.Sanitation}%<br>
-      Prevelance of Undernourishment: ${d.undernourishment_rate}%
+      Prevelance of Undernourishment: ${d.prevelance_of_undernourishment}%
     `);
       ;
     })
@@ -169,6 +195,36 @@ function initChart() {
       Tooltip.style("opacity", 0);
     });
 
+     // Draw the lines
+  svg
+  .selectAll("myPath2")
+  .data(ParallelData2)
+  .join("path")
+  .attr("d", path)
+  .style("fill", "none")
+  .style("stroke", this_region_color2)
+  .style("stroke-width", 4)
+  .style("opacity", 0.5)
+
+  .on("mouseover", (event, d) => {
+    Tooltip.style("opacity", 1)
+      .html(`
+    Country: ${d.country_name}<br>
+    Life Expectancy: ${d.life_expectancy}<br>
+    Health Expenditure: ${d.health_expenditure}%<br>
+    Sanitation: ${d.Sanitation}%<br>
+    Prevelance of Undernourishment: ${d.prevelance_of_undernourishment}%
+  `);
+    ;
+  })
+  .on("mousemove", (event) => {
+    Tooltip
+      .style("top", (event.pageY - 10) + "px")
+      .style("left", (event.pageX + 10) + "px");
+  })
+  .on("mouseleave", () => {
+    Tooltip.style("opacity", 0);
+  });
 
   // Draw the axis:
   svg.selectAll("myAxis")
@@ -182,15 +238,17 @@ function initChart() {
     // Add axis title
     .append("text")
     .style("text-anchor", "middle")
-    .style("font-size", "14px")
-    .attr("y", -3)
+    .style("font-size", "12px")
+    .attr("y", -8)
     .text(function (d) { return d; })
     .style("fill", "black")
+
+    
 
 }
 
 export function updateParallel(region, region_color) {
-  region_name = region;
+  region_name1 = region;
   this_region_color = region_color;
   d3.select("#parallel-svg").selectAll("*").remove();
   initChart();
