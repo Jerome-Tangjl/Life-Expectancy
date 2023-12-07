@@ -9,6 +9,16 @@ let region_name1 = "Sub-Saharan Africa";
 let this_region_color1 = "#FF5733";
 let region_name2 = "North America";
 let this_region_color2 = "#6EC644";
+let region_name3 = "South Asia";
+let this_region_color3 = "#F27E23";
+let region_name4 = "East Asia & Pacific";
+let this_region_color4 = "#FFC300";
+let region_name5 = "Latin America & Caribbean";
+let this_region_color5 = "#F2D323";
+let region_name6 = "Middle East & North Africa";
+let this_region_color6 = "#F2EE23";
+let region_name7 = "Europe & Central Asia";
+let this_region_color7 = "#DAF7A6";
 
 function getData(data) {
 
@@ -80,6 +90,11 @@ function initChart() {
 
   const ScatterData1 = getDataForRegion(rawData, region_name1);
   const ScatterData2 = getDataForRegion(rawData, region_name2);
+  const ScatterData3 = getDataForRegion(rawData, region_name3);
+  const ScatterData4 = getDataForRegion(rawData, region_name4);
+  const ScatterData5 = getDataForRegion(rawData, region_name5);
+  const ScatterData6 = getDataForRegion(rawData, region_name6);
+  const ScatterData7 = getDataForRegion(rawData, region_name7);
 
   // append the svg object to the body of the page
   const svg = d3.select("#scatter-svg")
@@ -166,6 +181,64 @@ function initChart() {
       .y(d => y(d.avgLifeExpectancy))
     );
 
+    svg.append("path")
+    .datum(ScatterData3)
+    .attr("fill", "none")
+    .attr("stroke", "black")
+    .attr("stroke-width", 1.5)
+    .attr("d", d3.line()
+      .curve(d3.curveBasis)
+      .x(d => x(d.year))
+      .y(d => y(d.avgLifeExpectancy))
+    );
+
+    svg.append("path")
+    .datum(ScatterData4)
+    .attr("fill", "none")
+    .attr("stroke", "black")
+    .attr("stroke-width", 1.5)
+    .attr("d", d3.line()
+      .curve(d3.curveBasis)
+      .x(d => x(d.year))
+      .y(d => y(d.avgLifeExpectancy))
+    );
+
+    svg.append("path")
+    .datum(ScatterData5)
+    .attr("fill", "none")
+    .attr("stroke", "black")
+    .attr("stroke-width", 1.5)
+    .attr("d", d3.line()
+      .curve(d3.curveBasis)
+      .x(d => x(d.year))
+      .y(d => y(d.avgLifeExpectancy))
+    );
+
+    svg.append("path")
+    .datum(ScatterData6)
+    .attr("fill", "none")
+    .attr("stroke", "black")
+    .attr("stroke-width", 1.5)
+    .attr("d", d3.line()
+      .curve(d3.curveBasis)
+      .x(d => x(d.year))
+      .y(d => y(d.avgLifeExpectancy))
+    );
+
+    svg.append("path")
+    .datum(ScatterData7)
+    .attr("fill", "none")
+    .attr("stroke", "black")
+    .attr("stroke-width", 1.5)
+    .attr("d", d3.line()
+      .curve(d3.curveBasis)
+      .x(d => x(d.year))
+      .y(d => y(d.avgLifeExpectancy))
+    );
+
+
+
+
   // create a tooltip
   const Tooltip = d3.select("#scatter-container")
     .append("div")
@@ -233,31 +306,181 @@ function initChart() {
     .on("mousemove", mousemove)
     .on("mouseleave", mouseleave)
 
+
+    svg
+    .append("g")
+    .selectAll("dot")
+    .data(ScatterData3)
+    .join("circle")
+    .attr("class", "myCircle")
+    .attr("cx", d => x(d.year))
+    .attr("cy", d => y(d.avgLifeExpectancy))
+    .attr("r", 8)
+    .attr("stroke", this_region_color3)
+    .attr("stroke-width", 3)
+    .attr("fill", "white")
+    .on("mouseover", mouseover)
+    .on("mousemove", mousemove)
+    .on("mouseleave", mouseleave)
+
+    svg
+    .append("g")
+    .selectAll("dot")
+    .data(ScatterData4)
+    .join("circle")
+    .attr("class", "myCircle")
+    .attr("cx", d => x(d.year))
+    .attr("cy", d => y(d.avgLifeExpectancy))
+    .attr("r", 8)
+    .attr("stroke", this_region_color4)
+    .attr("stroke-width", 3)
+    .attr("fill", "white")
+    .on("mouseover", mouseover)
+    .on("mousemove", mousemove)
+    .on("mouseleave", mouseleave)
+
+    svg
+    .append("g")
+    .selectAll("dot")
+    .data(ScatterData5)
+    .join("circle")
+    .attr("class", "myCircle")
+    .attr("cx", d => x(d.year))
+    .attr("cy", d => y(d.avgLifeExpectancy))
+    .attr("r", 8)
+    .attr("stroke", this_region_color5)
+    .attr("stroke-width", 3)
+    .attr("fill", "white")
+    .on("mouseover", mouseover)
+    .on("mousemove", mousemove)
+    .on("mouseleave", mouseleave)
+
+    svg
+    .append("g")
+    .selectAll("dot")
+    .data(ScatterData6)
+    .join("circle")
+    .attr("class", "myCircle")
+    .attr("cx", d => x(d.year))
+    .attr("cy", d => y(d.avgLifeExpectancy))
+    .attr("r", 8)
+    .attr("stroke", this_region_color6)
+    .attr("stroke-width", 3)
+    .attr("fill", "white")
+    .on("mouseover", mouseover)
+    .on("mousemove", mousemove)
+    .on("mouseleave", mouseleave)
+
+    svg
+    .append("g")
+    .selectAll("dot")
+    .data(ScatterData7)
+    .join("circle")
+    .attr("class", "myCircle")
+    .attr("cx", d => x(d.year))
+    .attr("cy", d => y(d.avgLifeExpectancy))
+    .attr("r", 8)
+    .attr("stroke", this_region_color7)
+    .attr("stroke-width", 3)
+    .attr("fill", "white")
+    .on("mouseover", mouseover)
+    .on("mousemove", mousemove)
+    .on("mouseleave", mouseleave)
+
+
+
   const legend = svg.append("g")
     .attr("transform", `translate(-50, ${margin.top})`);
 
   legend.append("rect")
-    .attr("x", size.width - 200)
+    .attr("x", size.width - 250)
     .attr("y", 0)
     .attr("width", 20)
     .attr("height", 20)
     .attr("fill", this_region_color2);
 
   legend.append("text")
-    .attr("x", size.width - 170)
+    .attr("x", size.width - 220)
     .attr("y", 15)
     .text(region_name2);
 
+
   legend.append("rect")
-    .attr("x", size.width - 200)
+    .attr("x", size.width - 250)
     .attr("y", 25)
+    .attr("width", 20)
+    .attr("height", 20)
+    .attr("fill", this_region_color7);
+
+  legend.append("text")
+    .attr("x", size.width - 220)
+    .attr("y", 40)
+    .text(region_name7);
+
+
+    legend.append("rect")
+    .attr("x", size.width - 250)
+    .attr("y", 50)
+    .attr("width", 20)
+    .attr("height", 20)
+    .attr("fill", this_region_color6);
+
+  legend.append("text")
+    .attr("x", size.width - 220)
+    .attr("y", 65)
+    .text(region_name6);
+
+
+    legend.append("rect")
+    .attr("x", size.width - 250)
+    .attr("y", 75)
+    .attr("width", 20)
+    .attr("height", 20)
+    .attr("fill", this_region_color5);
+
+  legend.append("text")
+    .attr("x", size.width - 220)
+    .attr("y", 90)
+    .text(region_name5);
+
+
+    legend.append("rect")
+    .attr("x", size.width - 250)
+    .attr("y", 100)
+    .attr("width", 20)
+    .attr("height", 20)
+    .attr("fill", this_region_color4);
+
+  legend.append("text")
+    .attr("x", size.width - 220)
+    .attr("y", 115)
+    .text(region_name4);
+
+
+
+    legend.append("rect")
+    .attr("x", size.width - 250)
+    .attr("y", 125)
+    .attr("width", 20)
+    .attr("height", 20)
+    .attr("fill", this_region_color3);
+
+  legend.append("text")
+    .attr("x", size.width - 220)
+    .attr("y", 140)
+    .text(region_name3);
+    
+
+  legend.append("rect")
+    .attr("x", size.width - 250)
+    .attr("y", 150)
     .attr("width", 20)
     .attr("height", 20)
     .attr("fill", this_region_color1);
 
   legend.append("text")
-    .attr("x", size.width - 170)
-    .attr("y", 40)
+    .attr("x", size.width - 220)
+    .attr("y", 165)
     .text(region_name1);
 
 

@@ -83,7 +83,7 @@ function initChart() {
     .attr("text-anchor", "middle")
     .style("font-size", "18px")
     .style("font-weight", "bold")
-    .text(`Life expectancy correlation in ${region_name}`);
+    .text(`Life expectancy correlation in ${region_name} in 2019`);
 
 
   // Extract the list of dimensions we want to keep in the plot. Here I keep all except the column called Species
